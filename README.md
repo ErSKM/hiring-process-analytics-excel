@@ -117,9 +117,9 @@ The analysis covers five specific business questions across gender, salary, and 
 
 | File | Description |
 |---|---|
-| `HiringOperation_Raw_Data.xlsx` | Full Excel workbook with all analysis |
+| `Hiring_Process_Analytics_Excel.xlsx` | Full Excel workbook with all analysis |
 | `README.md` | This file |
-| `screenshots/dashboard.png` | Dashboard screenshot for portfolio preview |
+| `dashboard.png` | Dashboard screenshot for portfolio preview |
 
 ---
 
