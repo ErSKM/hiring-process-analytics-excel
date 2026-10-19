@@ -125,7 +125,7 @@ The analysis covers five specific business questions across gender, salary, and 
 
 ## How to Use
 
-1. Open `HiringOperation_Raw_Data.xlsx` in Microsoft Excel (2016 or later)
+1. Open `Hiring_Process_Analytics_Excel.xlsx` in Microsoft Excel (2016 or later)
 2. Start on the `Dashboard` sheet for the summary view
 3. Navigate to `Analysis` to see the individual Pivot Tables and task answers
 4. `Raw Data` contains the cleaned dataset with all derived columns
