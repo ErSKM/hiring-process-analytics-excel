@@ -1,7 +1,7 @@
 # Hiring Process Analytics — Excel (Advanced)
 
 **Tool:** Microsoft Excel 2021 (Power Query, PivotTables, statistical functions, charts, dashboard)  
-**Dataset:** Hiring Process Statistics — 7,168 applicant records from a multinational company (2014)  
+**Dataset:** Hiring Process Statistics — 7,168 applicant records from 2014  
 **Domain:** HR Analytics / Talent Acquisition  
 **Status:** Completed
 
@@ -27,9 +27,20 @@ This project analyzes hiring-process data to examine gender distribution among a
 | `Salary` | Offered salary in INR |
 | `Salary Band` | Derived salary range bucket |
 
-**Raw records:** 7,168  
-**Records after cleaning:** 7,162  
-**Records removed:** 6 — 3 salaries below ₹1,000 were excluded as implausibly low, and 3 salaries above the IQR upper fence of ₹1,47,763.25 were excluded.
+**Source records:** 7,168  
+**Records in the cleaned worksheet:** 7,162  
+**Difference:** 6 records
+
+### Cleaning and reconciliation
+
+The workbook's Summary Stats sheet reports Q1 of ₹25,473.25, Q3 of ₹74,389.25, an IQR of ₹48,916, and an upper IQR fence of ₹147,763.25. Comparing the supplied source statistics workbook with the cleaned worksheet by application ID and salary shows:
+
+- Three omitted records had salaries above the upper fence: ₹200,000, ₹300,000, and ₹400,000.
+- Two omitted records had salaries below ₹1,000: ₹100 and ₹800.
+- One other omitted record had a salary of ₹85,914 and Position Code `Unassigned`. This salary is below the upper fence, and the supplied files do not document why this row was omitted.
+- A source row with a ₹0 salary appears in the cleaned worksheet with a salary of ₹49,625, the reported median. This appears to be median imputation, but the workbook does not document the transformation rule.
+
+The workbook's summary describes six records as removed through outlier cleaning. The row-level comparison confirms the six-record difference but shows that the six omissions do not all fit that explanation. The treatment of the `Unassigned` row and the ₹0-to-median change should therefore be considered undocumented in the supplied workbook.
 
 ---
 
@@ -39,7 +50,7 @@ This project analyzes hiring-process data to examine gender distribution among a
 - **Formula-based derived columns** — Position Tier (IF + LEFT) and Salary Band (nested IF)
 - **PivotTables** — Cross-tabulations for the five analysis tasks
 - **Statistical functions** — AVERAGE, MEDIAN, STDEV, QUARTILE, COUNTIFS, AVERAGEIFS
-- **IQR review** — Q1, Q3, and IQR calculated; the upper fence was used to flag three high-salary records. Three sub-₹1,000 salaries were separately excluded as implausibly low.
+- **IQR review** — Calculated Q1, Q3, IQR, and the upper fence; three omitted high-salary records exceed that fence. The row-level comparison also identified two omitted salaries below ₹1,000 and one omitted `Unassigned` row below the upper fence.
 - **Charts and dashboard** — Pie, bar, column/histogram, and donut charts arranged in a dashboard
 
 ---
@@ -63,9 +74,18 @@ This project analyzes hiring-process data to examine gender distribution among a
 
 ### C. Salary Distribution
 
-- The ₹40k–60k band is the largest, representing about **21.4%** of cleaned records.
-- Counts are broadly similar across the five displayed salary bands; the workbook does not include a formal normality test.
-- The “Very High (>₹100k)” band has no records after cleaning; the maximum salary is ₹99,967.
+The counts below are transcribed from the workbook's **Analysis** sheet Salary Distribution PivotTable:
+
+| Salary band | Applications | Share of 7,162 |
+|---|---:|---:|
+| Very Low (₹0–20k) | 1,408 | 19.7% |
+| Low (₹20k–40k) | 1,420 | 19.8% |
+| Mid (₹40k–60k) | 1,533 | 21.4% |
+| Upper-Mid (₹60k–80k) | 1,432 | 20.0% |
+| High (₹80k–100k) | 1,369 | 19.1% |
+| **Total** | **7,162** | **100.0%** |
+
+The ₹40k–60k band is the largest. The five PivotTable counts sum to the cleaned record total. During reconciliation, the row-level `Salary Band` values showed a one-record difference in the Low and Mid counts compared with this PivotTable; the PivotTable counts are reported here, and that one-record split discrepancy remains unresolved. The workbook does not include a formal normality test. The “Very High (>₹100k)” band has no records in the cleaned worksheet; its maximum salary is ₹99,967.
 
 ### D. Departmental Analysis
 
@@ -87,9 +107,9 @@ This project analyzes hiring-process data to examine gender distribution among a
 
 | Metric | Value |
 |---|---:|
-| Total Records | 7,168 |
-| Records after cleaning | 7,162 |
-| Records removed | 6 |
+| Source Records | 7,168 |
+| Records in cleaned worksheet | 7,162 |
+| Difference | 6 |
 | Hire Rate | 65.5% |
 | Rejection Rate | 34.5% |
 | Mean Salary | ₹49,887 |
@@ -98,9 +118,9 @@ This project analyzes hiring-process data to examine gender distribution among a
 | Q1 | ₹25,473.25 |
 | Q3 | ₹74,389.25 |
 | IQR | ₹48,916 |
-| Upper Outlier Fence (Q3 + 1.5 × IQR) | ₹147,763.25 |
-| Minimum Salary (after cleaning) | ₹1,007 |
-| Maximum Salary (after cleaning) | ₹99,967 |
+| Upper IQR Fence (Q3 + 1.5 × IQR) | ₹147,763.25 |
+| Minimum Salary (cleaned worksheet) | ₹1,007 |
+| Maximum Salary (cleaned worksheet) | ₹99,967 |
 
 ---
 
@@ -120,7 +140,7 @@ This project analyzes hiring-process data to examine gender distribution among a
 | File | Description |
 |---|---|
 | `Hiring_Process_Analytics_Excel.xlsx` | Excel workbook with the analysis |
-| `README.md` | Project overview and findings |
+| `README.md` | Project overview, methodology notes, and findings |
 | `dashboard.png` | Dashboard screenshot |
 
 ---
@@ -131,7 +151,7 @@ This project analyzes hiring-process data to examine gender distribution among a
 2. Start on the `Dashboard` sheet for the summary view.
 3. Open `Analysis` to review the five analysis tasks.
 4. Review the cleaned records and derived columns in `Raw Data`.
-5. Refer to `Summary Stats` for the statistical summary.
+5. Refer to `Summary Stats` for the statistical summary and the cleaning-reconciliation note above for the six-record difference.
 
 ---
 
